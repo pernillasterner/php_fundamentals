@@ -1,22 +1,39 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo</title>
+</head>
+<style>
+  body {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+  }
+</style>
+<body>
 
-require 'functions.php';
-// require 'router.php';
-require 'Database.php';
+  <?php
+    $name = "Dark Matter";
+    $read = true;
 
+    if($read) {
+      $message = "You have read $name";
+    } else {
+      $message = "You have NOT read $name";
+    }
+  ?>
 
-// Config data
-$config = require('config.php');
+  <h1>
+    You have read "<?php echo $read ? $name : "something else"; ?>."
+  </h1>
 
-// Initialize a new instance of a class
-$db = new Database($config['database']);
+  <h1>
+    <?php echo $message; ?>
+  </h1>
 
-// /?id=1
-$id = $_GET['id'];
-// Use placeholder to prevent intrusion. Bind the value later on to protect the db.
-$query = "select * from posts where id = :id";
-
-// Calling the query method
-$posts = $db->query($query, [':id' => $id])->fetch();
-
-dd($posts);
+</body>
+</html>
