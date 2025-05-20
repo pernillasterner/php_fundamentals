@@ -22,7 +22,7 @@
   $books = [
     [
       'title' =>  "Book 1",
-      'category' => 'Horrer',
+      'category' => 'Fantasy',
       'releaseYear' => 2011,
     ],
     [
@@ -33,22 +33,23 @@
   ];
 
 
-  function filterByAuthor(array $books) {
-    $filtredBooks = [];
+  function filter(array $items, string $key, string $value) {
+    $filtredItems = [];
 
-    foreach($books as $book) :
-      if($book['title'] === 'Book 1') :
-        $filtredBooks[] = $book;
+    foreach($items as $item) :
+      if($item[$key] === $value) :
+        $filtredItems[] = $item;
       endif;
     endforeach;
 
-    return $filtredBooks;
-  }
+    return $filtredItems;
+  };
   
+  $filtredBooks = filter($books, 'title', 'Book 1');
   ?>
 
   <ul>
-    <?php foreach (filterByAuthor($books) as $book) : ?>
+    <?php foreach ($filtredBooks as $book) : ?>
       <li>
         <?= $book['title'] ?> (<?= $book['releaseYear'] ?>)
       </li>
