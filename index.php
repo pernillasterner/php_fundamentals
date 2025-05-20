@@ -9,7 +9,7 @@
   body {
     display: grid;
     place-items: center;
-    height: 100vh;
+    /* height: 100vh; */
     margin: 0;
     font-family: sans-serif;
   }
@@ -19,19 +19,40 @@
   <h1>Recommended Books</h1>
 
   <?php
-  
   $books = [
-    "Book 1",
-    "Book 2",
-    "Book 3",
-  ]
+    [
+      'title' =>  "Book 1",
+      'category' => 'Horrer',
+      'releaseYear' => 2011,
+    ],
+    [
+      'title' =>  "Book 2",
+      'category' => 'Comedy',
+      'releaseYear' => 1989,
+    ]
+  ];
 
+
+  function filterByAuthor(array $books) {
+    $filtredBooks = [];
+
+    foreach($books as $book) :
+      if($book['title'] === 'Book 1') :
+        $filtredBooks[] = $book;
+      endif;
+    endforeach;
+
+    return $filtredBooks;
+  }
+  
   ?>
 
   <ul>
-    <?php foreach ($books as $book) : ?>
-      <li><?= $book ?></li>
-    <?php endforeach ?>
+    <?php foreach (filterByAuthor($books) as $book) : ?>
+      <li>
+        <?= $book['title'] ?> (<?= $book['releaseYear'] ?>)
+      </li>
+    <?php endforeach; ?>
   </ul>
 
 </body>
