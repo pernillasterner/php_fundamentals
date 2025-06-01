@@ -1,33 +1,15 @@
-<?php
+<?php 
 
-$books = [
-  [
-    'title' =>  "Book 1",
-    'category' => 'Fantasy',
-    'releaseYear' => 2011,
-  ],
-  [
-    'title' =>  "Book 2",
-    'category' => 'Comedy',
-    'releaseYear' => 1989,
-  ]
-];
+$heading = 'Home';
 
-function filter($items, $fn) {
+function dd($value) {
+  echo "<pre>";
+  var_dump($value);
+  echo "</pre>";
 
-  $filtredItems = [];
-
-  foreach($items as $item) {
-      if($fn($item)) {
-        $filtredItems[] = $item;
-      } 
-  }
-  return $filtredItems;
+  die();
 }
 
-$filtredBooks = array_filter($books, function($book) {
-  return $book['title'] === 'Book 1';
-});
+echo $_SERVER['REQUEST_URI'];
 
-// load the html
-require "index.view.php";
+require('views/index.view.php'); ?>
