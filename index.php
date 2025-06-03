@@ -6,7 +6,12 @@ require('Database.php');
 
 $config = require('config.php');
 
-$db = new Database($config);
-$notes = $db->query("SELECT * FROM notes")->fetchAll(PDO::FETCH_ASSOC);
+$db = new Database($config['database']);
+
+$id = $_GET['id'];
+
+$query = "SELECT * FROM notes WHERE id = :id";
+
+$notes = $db->query($query, ['id' => $id])->fetch();
 
 dd($notes);
