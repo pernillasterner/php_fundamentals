@@ -1,34 +1,28 @@
 <?php
 
-// Connect to the database, and execute a query
+// Connect to db, and execute a query
 class Database
 {
-    public $connection;
+  public $connection;
 
-    // When and instance is constructed. First thing to run
-    public function __construct($config, $username = 'root', $password = '')
-    {
+  public function __construct($config)
+  {
 
-        // Setup connection to the MySQL database using PDO (PHP Data Objects).
-        // Data Source Name (DNS) specifies the connection details for MySQL: Like a connection string
-        $dsn = 'mysql:' . http_build_query($config, '', ';'); // host=localhost;port=3306;dbname=myapp
+    // "host=localhost;port=3306;dbname=myapp;charset=utf8mb4"
+    $host = http_build_query($config, '', ';'); //example.com?host=localhost&port=3006
+    
+    $dns = "mysql:{$host}";
+    $this->connection = new PDO($dns, 'root', '', [
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+  }
 
+  public function query($sql)
+  {
+    // prepared query statement
+    $statement = $this->connection->prepare($sql);
+    $statement->execute();
 
-        // Initialize the PDO instance to connect to the database
-        $this->connection = new PDO($dsn, $username, $password, [
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
-    }
-
-    public function query($query, $params = [])
-    {
-
-        $statement = $this->connection->prepare($query);
-
-        // Execute the code
-        $statement->execute($params);
-
-        // Fetch the results and remove duplicate array
-        return $statement;
-    }
+    return $statement;
+  }
 }
