@@ -4,15 +4,27 @@ require('functions.php');
 // require('router.php');
 
 
-// connect to MySQL database
-$dns = "mysql:host=localhost;port=3306;dbname=myapp;user=root;charset=utf8mb4";
+// Connect to db, and execute a query
+class Database
+{
 
-$pdo = new PDO($dns);
+  public $connection;
 
-// prepared query statement
-$statement = $pdo->prepare("SELECT * FROM notes");
-$statement->execute();
+  public function __construct()
+  {
+    $dns = "mysql:host=localhost;port=3306;dbname=myapp;user=root;charset=utf8mb4";
+    $this->connection = new PDO($dns);
+  }
 
-$notes = $statement->fetchAll();
+  public function query($sql)
+  {
+    // prepared query statement
+    $statement = $this->connection->prepare($sql);
+    $statement->execute();
 
-dd($notes);
+    return $statement;
+  }
+}
+
+$db = new Database();
+$db->query("SELECT * FROM notes")->fetchAll(PDO::FETCH_ASSOC);
