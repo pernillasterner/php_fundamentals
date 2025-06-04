@@ -4,7 +4,9 @@
 
 <main>
   <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-    <p>Welcome to the contact us page</p>
+    <?php foreach($notes as $note) : ?>
+        <li><?=$note['body'] ?></li>
+    <?php endforeach; ?>
   </div>
 </main>
 
