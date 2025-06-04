@@ -32,7 +32,7 @@ class Database
     return $this->statement->fetch();
   }
 
-  public function findAll() 
+  public function get() 
   {
     return $this->statement->fetchAll(PDO::FETCH_ASSOC);
   }
