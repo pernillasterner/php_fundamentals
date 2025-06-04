@@ -36,4 +36,18 @@ class Database
   {
     return $this->statement->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  public function findOrFail()
+  {
+    // Use find method to fetch the data
+    $result = $this->find();
+
+    // Check if there is a result
+    if (! $result) {
+      abort();
+    }
+    
+    return $result;
+  }
+
 }
