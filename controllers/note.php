@@ -6,20 +6,19 @@ $db = new Database($config['database']);
 $heading = 'My Note';
 
 $id = $_GET['id'];
+$currentUserId = 1;
 
 $note = $db->query("select * from notes where id = :id", [
   'id' => $id
-])->fetch();
+])->find();
 
 
 if (! $note) {
   abort();
 }
 
-$currentUserId = 1;
-
 if ($note['user_id'] !== $currentUserId) {
-  abort(403);
+  abort(Response::FORBIDDEN);
 }
 
 require('views/note.view.php'); 
