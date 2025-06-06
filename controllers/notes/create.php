@@ -25,4 +25,4 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   
 }
 
-require('views/notes/note-create.view.php'); 
+require('views/notes/create.view.php'); 
