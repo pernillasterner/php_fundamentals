@@ -6,56 +6,41 @@ class Router
 {
   protected $routes = [];
 
+  public function add($uri, $controller, $method)
+  {
+    $this->routes[] = compact('uri', 'controller', 'method');
+  }
+
   public function get($uri, $controller)
   {
-    $this->routes[] = [
-      'uri' => $uri,
-      'controller' => $controller,
-      'method' => 'GET'
-    ];
+    $this->add($uri, $controller, 'GET');
   }
 
   public function post($uri, $controller)
   {
-    $this->routes[] = [
-      'uri' => $uri,
-      'controller' => $controller,
-      'method' => 'POST'
-    ];
+    $this->add($uri, $controller, 'POST');
   }
 
   public function delete($uri, $controller)
   {
-    $this->routes[] = [
-      'uri' => $uri,
-      'controller' => $controller,
-      'method' => 'DELETE'
-    ];
+    $this->add($uri, $controller, 'DELETE');
   }
 
   public function patch($uri, $controller)
   {
-    $this->routes[] = [
-      'uri' => $uri,
-      'controller' => $controller,
-      'method' => 'PATCH'
-    ];
+    $this->add($uri, $controller, 'PATCH');
   }
 
   public function put($uri, $controller)
   {
-    $this->routes[] = [
-      'uri' => $uri,
-      'controller' => $controller,
-      'method' => 'PUT'
-    ];
+    $this->add($uri, $controller, 'PUT');
   }
 
   public function route($uri, $method)
   {
     // Check if key exists in route array
     foreach($this->routes as $route) {
-      
+
       if($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
         return require base_path($route['controller']);
       }
