@@ -4,18 +4,37 @@ use Core\Database;
 
 $config = require base_path('config.php');
 $db = new Database($config['database']);
-
-$id = $_GET['id'];
 $currentUserId = 1;
 
-$note = $db->query("select * from notes where id = :id", [
-  'id' => $id
-])->findOrFail();
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // before deleting, track down the note that matches the id
+  $note = $db->query("select * from notes where id = :id", [
+    'id' => $_GET['id']
+  ])->findOrFail();
+  
+  // is the user id the same as the current user id
+  authorize($note['user_id'] === $currentUserId);
 
+  // form was submitted. delete the current note
+  $db->query('delete from notes where id = :id', [
+    'id' => $_POST['id']
+  ]);
 
-authorize($note['user_id'] === $currentUserId);
+  // redirect to the page that shows all the notes
+  header('Location: /notes');
+  exit;
 
-view('notes/show.view.php', [
-  'heading' => 'My Note',
-  'note' => $note
-]);
+} else {
+
+  $note = $db->query("select * from notes where id = :id", [
+    'id' => $_GET['id']
+  ])->findOrFail();
+  
+  
+  authorize($note['user_id'] === $currentUserId);
+  
+  view('notes/show.view.php', [
+    'heading' => 'My Note',
+    'note' => $note
+  ]);
+}
