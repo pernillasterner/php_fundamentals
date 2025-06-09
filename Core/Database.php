@@ -41,6 +41,16 @@ class Database
     return $this->statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public function abort($code = 404) {
+  
+    http_response_code($code);
+    
+    require base_path("views/{$code}.php");
+    
+    die();
+    
+  }
+
   public function findOrFail()
   {
     // Use find method to fetch the data
@@ -48,7 +58,7 @@ class Database
 
     // Check if there is a result
     if (! $result) {
-      abort();
+      $this->abort();
     }
     
     return $result;
